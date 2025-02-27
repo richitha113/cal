@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJw...dRmmEw==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="./style1.css"
+</head>
+<body>
+
+<div class="calculator">
+    <div class="calculator-display" id="display">0</div>
+    <div class="row">
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="clearDisplay()">C</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(7)">7</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(8)">8</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(9)">9</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(4)">4</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(5)">5</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(6)">6</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendOperator('+')">+</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(1)">1</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(2)">2</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(3)">3</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendOperator('-')">-</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendNumber(0)">0</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendOperator('*')">*</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-light button" onclick="appendOperator('/')">/</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-primary button" onclick="calculate()">=</button>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-b1A8+uA9Gz84jYo2pDJV9ftVx0MiWi4H5fZ5FwDgWr6fVf5hG1FC98WR0k7A3IVe" crossorigin="anonymous"></script>
+
+<script>
+    let currentInput = '0';
+    let previousInput = '';
+    let operator = null;
+
+    function updateDisplay() {
+        document.getElementById('display').textContent = currentInput;
+    }
+
+    function clearDisplay() {
+        currentInput = '0';
+        previousInput = '';
+        operator = null;
+        updateDisplay();
+    }
+
+    function appendNumber(number) {
+        if (currentInput === '0') {
+            currentInput = number.toString();
+        } else {
+            currentInput += number.toString();
+        }
+        updateDisplay();
+    }
+
+    function appendOperator(op) {
+        if (operator !== null) return;
+        operator = op;
+        previousInput = currentInput;
+        currentInput = '0';
+        updateDisplay();
+    }
+
+    function calculate() {
+        if (operator === null || previousInput === '') return;
+        let result;
+        switch (operator) {
+            case '+':
+                result = parseFloat(previousInput) + parseFloat(currentInput);
+                break;
+            case '-':
+                result = parseFloat(previousInput) - parseFloat(currentInput);
+                break;
+            case '*':
+                result = parseFloat(previousInput) * parseFloat(currentInput);
+                break;
+            case '/':
+                result = parseFloat(previousInput) / parseFloat(currentInput);
+                break;
+        }
+        currentInput = result.toString();
+        operator = null;
+        previousInput = '';
+        updateDisplay();
+    }
+</script>
+
+</body>
+</html>
